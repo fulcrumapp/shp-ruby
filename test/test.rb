@@ -33,6 +33,7 @@ end
 end
 
 puts shp.get_info
+puts dbf.get_field_count
 
 dbf.close
 shp.close

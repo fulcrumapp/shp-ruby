@@ -177,6 +177,15 @@ VALUE dbf::close(VALUE self)
   return Qnil;
 }
 
+VALUE dbf::get_field_count(VALUE self)
+{
+  dbf *db = unwrap(self);
+
+  int fieldCount = DBFGetFieldCount(db->value());
+
+  return INT2FIX(fieldCount);
+}
+
 void dbf::define(VALUE module)
 {
   dbf::_klass = rb_define_class_under(module, "DBF", rb_cObject);
@@ -189,6 +198,7 @@ void dbf::define(VALUE module)
   rb_define_method(dbf::_klass, "write_string_attribute", SHP_METHOD(dbf::write_string_attribute), 3);
   rb_define_method(dbf::_klass, "write_null_attribute", SHP_METHOD(dbf::write_null_attribute), 2);
   rb_define_method(dbf::_klass, "close", SHP_METHOD(dbf::close), 0);
+  rb_define_method(dbf::_klass, "get_field_count", SHP_METHOD(dbf::get_field_count), 0);
 }
 
 }
