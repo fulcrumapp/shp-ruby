@@ -92,6 +92,95 @@ VALUE shapefile::create_simple_object(VALUE self, VALUE shapeType, VALUE numberO
   return shape->wrapped();
 }
 
+
+VALUE shapefile::create_object(VALUE self, VALUE shapeType, VALUE shapeIndex, VALUE numberOfParts,
+                               VALUE arrayOfPartStarts, VALUE arrayOfPartTypes, VALUE numberOfVertices,
+                               VALUE arrayOfX, VALUE arrayOfY, VALUE arrayOfZ, VALUE arrayOfM)
+{
+  CHECK_ARGUMENT_FIXNUM(shapeType);
+  CHECK_ARGUMENT_FIXNUM(shapeIndex);
+  CHECK_ARGUMENT_FIXNUM(numberOfParts);
+  CHECK_ARGUMENT_FIXNUM(numberOfVertices);
+  CHECK_ARGUMENT_ARRAY(arrayOfX);
+  CHECK_ARGUMENT_ARRAY(arrayOfY);
+
+  double *xVertices = new double[FIX2INT(numberOfVertices)];
+  double *yVertices = new double[FIX2INT(numberOfVertices)];
+  double *zVertices = NULL;
+  double *mVertices = NULL;
+
+  int *nativeArrayOfPartStarts = NULL;
+  int *nativeArrayOfPartTypes  = NULL;
+
+  if (!NIL_P(arrayOfZ)) {
+    CHECK_ARGUMENT_ARRAY(arrayOfZ);
+    zVertices = new double[FIX2INT(numberOfVertices)];
+  }
+
+  if (!NIL_P(arrayOfM)) {
+    CHECK_ARGUMENT_ARRAY(arrayOfM);
+    mVertices = new double[FIX2INT(numberOfVertices)];
+  }
+
+  if (!NIL_P(arrayOfPartStarts)) {
+    CHECK_ARGUMENT_ARRAY(arrayOfPartStarts);
+    nativeArrayOfPartStarts = new int[FIX2INT(numberOfParts)];
+
+    for (int i = 0; i < FIX2INT(numberOfParts); ++i) {
+      nativeArrayOfPartStarts[i] = FIX2INT(rb_ary_entry(arrayOfPartStarts, i));
+    }
+  }
+
+  if (!NIL_P(arrayOfPartTypes)) {
+    CHECK_ARGUMENT_ARRAY(arrayOfPartTypes);
+    nativeArrayOfPartTypes = new int[FIX2INT(numberOfParts)];
+
+    for (int i = 0; i < FIX2INT(numberOfParts); ++i) {
+      nativeArrayOfPartTypes[i] = FIX2INT(rb_ary_entry(arrayOfPartTypes, i));
+    }
+  }
+
+  SHPObject *object = SHPCreateObject(FIX2INT(shapeType),
+                                      FIX2INT(shapeIndex),
+                                      FIX2INT(numberOfParts),
+                                      nativeArrayOfPartStarts,
+                                      nativeArrayOfPartTypes,
+                                      FIX2INT(numberOfVertices),
+                                      xVertices,
+                                      yVertices,
+                                      zVertices,
+                                      mVertices);
+
+  delete [] xVertices;
+  delete [] yVertices;
+
+  if (zVertices) {
+    delete [] zVertices;
+  }
+
+  if (mVertices) {
+    delete [] mVertices;
+  }
+
+  if (nativeArrayOfPartStarts) {
+    delete [] nativeArrayOfPartStarts;
+  }
+
+  if (nativeArrayOfPartTypes) {
+    delete [] nativeArrayOfPartTypes;
+  }
+
+  if (object == NULL) {
+    SHP_FATAL("Failed to create shape object.");
+    return Qnil;
+  }
+
+  shape_object *shape = new shape_object(object);
+
+  return shape->wrapped();
+}
+
+
 VALUE shapefile::get_info(VALUE self)
 {
   shapefile *file = unwrap(self);
@@ -177,6 +266,7 @@ void shapefile::define(VALUE module)
   base::define(shapefile::_klass);
   rb_define_singleton_method(shapefile::_klass, "create", SHP_METHOD(shapefile::create), 2);
   rb_define_method(shapefile::_klass, "create_simple_object", SHP_METHOD(shapefile::create_simple_object), 5);
+  rb_define_method(shapefile::_klass, "create_object", SHP_METHOD(shapefile::create_simple_object), 10);
   rb_define_method(shapefile::_klass, "write_object", SHP_METHOD(shapefile::write_object), 2);
   rb_define_method(shapefile::_klass, "close", SHP_METHOD(shapefile::close), 0);
   rb_define_method(shapefile::_klass, "get_info", SHP_METHOD(shapefile::get_info), 0);

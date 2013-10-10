@@ -13,6 +13,9 @@ namespace shp {
     static void define(VALUE module);
     static VALUE create(VALUE klass, VALUE filename, VALUE shapeType);
     static VALUE create_simple_object(VALUE self, VALUE shapeType, VALUE numberOfVertices, VALUE arrayOfX, VALUE arrayOfY, VALUE arrayOfZ);
+    static VALUE create_object(VALUE self, VALUE shapeType, VALUE shapeIndex, VALUE numberOfParts,
+                               VALUE arrayOfPartStarts, VALUE arrayOfPartTypes, VALUE numberOfVertices,
+                               VALUE arrayOfX, VALUE arrayOfY, VALUE arrayOfZ, VALUE arrayOfM);
     static VALUE write_object(VALUE self, VALUE shapeIndex, VALUE shapeObject);
     static VALUE close(VALUE self);
     static VALUE get_info(VALUE self);
