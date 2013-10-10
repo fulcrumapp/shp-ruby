@@ -19,6 +19,8 @@ end
 (0..2000).each do |num|
   shape = shp.create_simple_object(1, 1, [rnd.rand(lon_range)], [rnd.rand(lat_range)], nil)
   shp.write_object(-1, shape)
+  shape.compute_extents
+
 
   (0..100).each do |field|
     dbf.write_string_attribute(num, field, "Record #{num} Field #{field}")
