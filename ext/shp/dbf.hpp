@@ -28,6 +28,7 @@ namespace shp {
     static VALUE get_field_index(VALUE self, VALUE fieldName);
     static VALUE get_field_info(VALUE self, VALUE fieldIndex);
     static VALUE is_record_deleted(VALUE self, VALUE recordIndex);
+    static VALUE mark_record_deleted(VALUE self, VALUE recordIndex, VALUE isDeleted);
 
     virtual VALUE klass();
     static VALUE _klass;

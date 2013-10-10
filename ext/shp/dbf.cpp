@@ -299,6 +299,17 @@ VALUE dbf::is_record_deleted(VALUE self, VALUE recordIndex)
   return INT2FIX(result);
 }
 
+VALUE dbf::mark_record_deleted(VALUE self, VALUE recordIndex, VALUE isDeleted)
+{
+  CHECK_ARGUMENT_FIXNUM(recordIndex);
+
+  dbf *db = unwrap(self);
+
+  int result = DBFMarkRecordDeleted(db->value(), FIX2INT(recordIndex), FIX2INT(isDeleted));
+
+  return INT2FIX(result);
+}
+
 void dbf::define(VALUE module)
 {
   dbf::_klass = rb_define_class_under(module, "DBF", rb_cObject);
@@ -320,6 +331,7 @@ void dbf::define(VALUE module)
   rb_define_method(dbf::_klass, "get_field_index", SHP_METHOD(dbf::get_field_index), 1);
   rb_define_method(dbf::_klass, "get_field_info", SHP_METHOD(dbf::get_field_info), 1);
   rb_define_method(dbf::_klass, "is_record_deleted", SHP_METHOD(dbf::is_record_deleted), 1);
+  rb_define_method(dbf::_klass, "mark_record_deleted", SHP_METHOD(dbf::mark_record_deleted), 2);
 }
 
 }
