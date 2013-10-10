@@ -20,6 +20,7 @@ namespace shp {
     static VALUE write_null_attribute(VALUE self, VALUE recordNumber, VALUE fieldIndex);
     static VALUE close(VALUE self);
     static VALUE get_field_count(VALUE self);
+    static VALUE get_record_count(VALUE self);
 
     virtual VALUE klass();
     static VALUE _klass;

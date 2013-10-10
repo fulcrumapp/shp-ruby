@@ -34,6 +34,7 @@ end
 
 puts shp.get_info
 puts dbf.get_field_count
+puts dbf.get_record_count
 
 dbf.close
 shp.close
