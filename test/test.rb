@@ -36,6 +36,7 @@ puts shp.get_info
 puts dbf.get_field_count == 101
 puts dbf.get_record_count == 2001
 puts dbf.get_field_index("field_1") == 1
+puts dbf.get_field_info(0) == { name: "field_0", type: 0, width: 254, decimals: 0 }
 
 dbf.close
 shp.close

@@ -206,6 +206,32 @@ VALUE dbf::get_field_index(VALUE self, VALUE fieldName)
   return INT2FIX(fieldIndex);
 }
 
+VALUE dbf::get_field_info(VALUE self, VALUE fieldIndex)
+{
+  CHECK_ARGUMENT_FIXNUM(fieldIndex);
+
+  dbf *db = unwrap(self);
+
+  char fieldName[12];
+  int fieldWidth = -1;
+  int fieldDecimals = -1;
+
+  DBFFieldType type = DBFGetFieldInfo(db->value(),
+                                     FIX2INT(fieldIndex),
+                                     fieldName,
+                                     &fieldWidth,
+                                     &fieldDecimals);
+
+  VALUE hash = rb_hash_new();
+
+  rb_hash_aset(hash, ID2SYM(rb_intern("name")), rb_str_new2(fieldName));
+  rb_hash_aset(hash, ID2SYM(rb_intern("type")), INT2FIX((int)type));
+  rb_hash_aset(hash, ID2SYM(rb_intern("width")), INT2FIX(fieldWidth));
+  rb_hash_aset(hash, ID2SYM(rb_intern("decimals")), INT2FIX(fieldDecimals));
+
+  return hash;
+}
+
 void dbf::define(VALUE module)
 {
   dbf::_klass = rb_define_class_under(module, "DBF", rb_cObject);
@@ -221,6 +247,7 @@ void dbf::define(VALUE module)
   rb_define_method(dbf::_klass, "get_field_count", SHP_METHOD(dbf::get_field_count), 0);
   rb_define_method(dbf::_klass, "get_record_count", SHP_METHOD(dbf::get_record_count), 0);
   rb_define_method(dbf::_klass, "get_field_index", SHP_METHOD(dbf::get_field_index), 1);
+  rb_define_method(dbf::_klass, "get_field_info", SHP_METHOD(dbf::get_field_info), 1);
 }
 
 }
