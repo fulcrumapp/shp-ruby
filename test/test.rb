@@ -17,7 +17,7 @@ lon_range = -82.0..-80.0
 end
 
 dbf.add_field("integer_0", 1, 2^31, 0)
-dbf.add_field("double_0", 1, 2^31, 8)
+dbf.add_field("double_0", 2, 2^31, 10)
 dbf.add_field("null_0", 1, 2^31, 0)
 
 (0..2000).each do |num|
@@ -41,6 +41,7 @@ puts dbf.get_record_count == 2001
 puts dbf.get_field_index("field_1") == 1
 puts dbf.get_field_info(0) == { name: "field_0", type: 0, width: 254, decimals: 0 }
 puts dbf.read_integer_attribute(0, dbf.get_field_index("integer_0")) == 1337
+puts dbf.read_double_attribute(0, dbf.get_field_index("double_0")) == 1337.1337
 
 dbf.close
 shp.close
