@@ -20,11 +20,12 @@ end
   shape = shp.create_simple_object(1, 1, [rnd.rand(lon_range)], [rnd.rand(lat_range)], nil)
   shp.write_object(-1, shape)
   shape.compute_extents
-
+  shp.rewind_object(shape)
 
   (0..100).each do |field|
     dbf.write_string_attribute(num, field, "Record #{num} Field #{field}")
   end
+
   # dbf.write_string_attribute(num, 0, "Record #{num}")
   # dbf.write_integer_attribute(num, 1, num)
   # dbf.write_double_attribute(num, 2, "#{num}.#{num}#{num}#{num}".to_f)

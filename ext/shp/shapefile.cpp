@@ -181,6 +181,20 @@ VALUE shapefile::create_object(VALUE self, VALUE shapeType, VALUE shapeIndex, VA
 }
 
 
+VALUE shapefile::rewind_object(VALUE self, VALUE shapeObject) {
+  shapefile *file = unwrap(self);
+  shape_object *shape = shape_object::unwrap(shapeObject);
+
+  if (shape == NULL) {
+    SHP_FATAL("You must specify a valid shape.");
+    return Qnil;
+  }
+
+  int result = SHPRewindObject(file->value(), shape->value());
+
+  return INT2FIX(result);
+}
+
 VALUE shapefile::get_info(VALUE self)
 {
   shapefile *file = unwrap(self);
@@ -271,6 +285,7 @@ void shapefile::define(VALUE module)
   rb_define_method(shapefile::_klass, "close", SHP_METHOD(shapefile::close), 0);
   rb_define_method(shapefile::_klass, "get_info", SHP_METHOD(shapefile::get_info), 0);
   rb_define_method(shapefile::_klass, "read_object", SHP_METHOD(shapefile::read_object), 1);
+  rb_define_method(shapefile::_klass, "rewind_object", SHP_METHOD(shapefile::rewind_object), 1);
 }
 
 }

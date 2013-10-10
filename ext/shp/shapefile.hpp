@@ -20,6 +20,7 @@ namespace shp {
     static VALUE close(VALUE self);
     static VALUE get_info(VALUE self);
     static VALUE read_object(VALUE self, VALUE shapeIndex);
+    static VALUE rewind_object(VALUE self, VALUE shapeObject);
 
     virtual VALUE klass();
     static VALUE _klass;
