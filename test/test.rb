@@ -43,6 +43,7 @@ puts dbf.get_field_info(0) == { name: "field_0", type: 0, width: 254, decimals: 
 puts dbf.read_integer_attribute(0, dbf.get_field_index("integer_0")) == 1337
 puts dbf.read_double_attribute(0, dbf.get_field_index("double_0")) == 1337.1337
 puts dbf.read_string_attribute(0, dbf.get_field_index("field_0")) == 'Record 0 Field 0'
+puts dbf.is_attribute_null(0, dbf.get_field_index("null_0")) == 1
 
 dbf.close
 shp.close

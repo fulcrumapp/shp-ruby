@@ -208,6 +208,20 @@ VALUE dbf::read_string_attribute(VALUE self, VALUE recordIndex, VALUE fieldIndex
   return rb_str_new2(result);
 }
 
+VALUE dbf::is_attribute_null(VALUE self, VALUE recordIndex, VALUE fieldIndex)
+{
+  CHECK_ARGUMENT_FIXNUM(recordIndex);
+  CHECK_ARGUMENT_FIXNUM(fieldIndex);
+
+  dbf *db = unwrap(self);
+
+  int result = DBFIsAttributeNULL(db->value(),
+                                  FIX2INT(recordIndex),
+                                  FIX2INT(fieldIndex));
+
+  return INT2NUM(result);
+}
+
 VALUE dbf::close(VALUE self)
 {
   dbf *db = unwrap(self);
@@ -288,6 +302,7 @@ void dbf::define(VALUE module)
   rb_define_method(dbf::_klass, "read_integer_attribute", SHP_METHOD(dbf::read_integer_attribute), 2);
   rb_define_method(dbf::_klass, "read_double_attribute", SHP_METHOD(dbf::read_double_attribute), 2);
   rb_define_method(dbf::_klass, "read_string_attribute", SHP_METHOD(dbf::read_string_attribute), 2);
+  rb_define_method(dbf::_klass, "is_attribute_null", SHP_METHOD(dbf::is_attribute_null), 2);
   rb_define_method(dbf::_klass, "close", SHP_METHOD(dbf::close), 0);
   rb_define_method(dbf::_klass, "get_field_count", SHP_METHOD(dbf::get_field_count), 0);
   rb_define_method(dbf::_klass, "get_record_count", SHP_METHOD(dbf::get_record_count), 0);
