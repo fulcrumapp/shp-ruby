@@ -14,10 +14,10 @@ namespace shp {
     static VALUE create(VALUE klass, VALUE filename);
     static VALUE open(VALUE klass, VALUE filename, VALUE access);
     static VALUE add_field(VALUE self, VALUE fieldName, VALUE fieldType, VALUE fieldWidth, VALUE fieldDecimals);
-    static VALUE write_integer_attribute(VALUE self, VALUE recordNumber, VALUE fieldIndex, VALUE fieldValue);
-    static VALUE write_double_attribute(VALUE self, VALUE recordNumber, VALUE fieldIndex, VALUE fieldValue);
-    static VALUE write_string_attribute(VALUE self, VALUE recordNumber, VALUE fieldIndex, VALUE fieldValue);
-    static VALUE write_null_attribute(VALUE self, VALUE recordNumber, VALUE fieldIndex);
+    static VALUE write_integer_attribute(VALUE self, VALUE recordIndex, VALUE fieldIndex, VALUE fieldValue);
+    static VALUE write_double_attribute(VALUE self, VALUE recordIndex, VALUE fieldIndex, VALUE fieldValue);
+    static VALUE write_string_attribute(VALUE self, VALUE recordIndex, VALUE fieldIndex, VALUE fieldValue);
+    static VALUE write_null_attribute(VALUE self, VALUE recordIndex, VALUE fieldIndex);
     static VALUE read_integer_attribute(VALUE self, VALUE recordIndex, VALUE fieldIndex);
     static VALUE read_double_attribute(VALUE self, VALUE recordIndex, VALUE fieldIndex);
     static VALUE read_string_attribute(VALUE self, VALUE recordIndex, VALUE fieldIndex);
@@ -29,6 +29,7 @@ namespace shp {
     static VALUE get_field_info(VALUE self, VALUE fieldIndex);
     static VALUE is_record_deleted(VALUE self, VALUE recordIndex);
     static VALUE mark_record_deleted(VALUE self, VALUE recordIndex, VALUE isDeleted);
+    static VALUE get_native_field_type(VALUE self, VALUE fieldIndex);
 
     virtual VALUE klass();
     static VALUE _klass;

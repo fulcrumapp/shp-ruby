@@ -310,6 +310,19 @@ VALUE dbf::mark_record_deleted(VALUE self, VALUE recordIndex, VALUE isDeleted)
   return INT2FIX(result);
 }
 
+VALUE dbf::get_native_field_type(VALUE self, VALUE fieldIndex)
+{
+  CHECK_ARGUMENT_FIXNUM(fieldIndex);
+
+  dbf *db = unwrap(self);
+
+  char result = DBFGetNativeFieldType(db->value(), FIX2INT(fieldIndex));
+
+  char resultAsString[2] = { result, '\0' };
+
+  return rb_str_new2(resultAsString);
+}
+
 void dbf::define(VALUE module)
 {
   dbf::_klass = rb_define_class_under(module, "DBF", rb_cObject);
@@ -332,6 +345,7 @@ void dbf::define(VALUE module)
   rb_define_method(dbf::_klass, "get_field_info", SHP_METHOD(dbf::get_field_info), 1);
   rb_define_method(dbf::_klass, "is_record_deleted", SHP_METHOD(dbf::is_record_deleted), 1);
   rb_define_method(dbf::_klass, "mark_record_deleted", SHP_METHOD(dbf::mark_record_deleted), 2);
+  rb_define_method(dbf::_klass, "get_native_field_type", SHP_METHOD(dbf::get_native_field_type), 1);
 }
 
 }
