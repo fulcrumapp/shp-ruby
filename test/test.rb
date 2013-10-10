@@ -47,9 +47,9 @@ puts dbf.is_attribute_null(0, dbf.get_field_index("null_0")) == 1
 puts dbf.is_record_deleted(0) == 0
 puts dbf.mark_record_deleted(0, 1) == 1
 puts dbf.is_record_deleted(0) == 1
-puts dbf.get_native_field_type(dbf.get_field_index("integer_0")) == 'N'
-puts dbf.get_native_field_type(dbf.get_field_index("double_0")) == 'N'
-puts dbf.get_native_field_type(dbf.get_field_index("field_0")) == 'C'
+puts dbf.get_native_field_type(dbf.get_field_index("integer_0")) == SHP::DBF::FT_NATIVE_TYPE_INTEGER
+puts dbf.get_native_field_type(dbf.get_field_index("double_0")) == SHP::DBF::FT_NATIVE_TYPE_DOUBLE
+puts dbf.get_native_field_type(dbf.get_field_index("field_0")) == SHP::DBF::FT_NATIVE_TYPE_STRING
 
 dbf.close
 shp.close
