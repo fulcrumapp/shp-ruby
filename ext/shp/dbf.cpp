@@ -288,6 +288,17 @@ VALUE dbf::get_field_info(VALUE self, VALUE fieldIndex)
   return hash;
 }
 
+VALUE dbf::is_record_deleted(VALUE self, VALUE recordIndex)
+{
+  CHECK_ARGUMENT_FIXNUM(recordIndex);
+
+  dbf *db = unwrap(self);
+
+  int result = DBFIsRecordDeleted(db->value(), FIX2INT(recordIndex));
+
+  return INT2FIX(result);
+}
+
 void dbf::define(VALUE module)
 {
   dbf::_klass = rb_define_class_under(module, "DBF", rb_cObject);
@@ -308,6 +319,7 @@ void dbf::define(VALUE module)
   rb_define_method(dbf::_klass, "get_record_count", SHP_METHOD(dbf::get_record_count), 0);
   rb_define_method(dbf::_klass, "get_field_index", SHP_METHOD(dbf::get_field_index), 1);
   rb_define_method(dbf::_klass, "get_field_info", SHP_METHOD(dbf::get_field_info), 1);
+  rb_define_method(dbf::_klass, "is_record_deleted", SHP_METHOD(dbf::is_record_deleted), 1);
 }
 
 }
