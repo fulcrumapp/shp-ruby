@@ -35,21 +35,72 @@ dbf.add_field("null_0", 1, 2^31, 0)
   dbf.write_null_attribute(num, dbf.get_field_index("null_0"))
 end
 
-puts shp.get_info
-puts dbf.get_field_count == 101
-puts dbf.get_record_count == 2001
-puts dbf.get_field_index("field_1") == 1
-puts dbf.get_field_info(0) == { name: "field_0", type: 0, width: 254, decimals: 0 }
-puts dbf.read_integer_attribute(0, dbf.get_field_index("integer_0")) == 1337
-puts dbf.read_double_attribute(0, dbf.get_field_index("double_0")) == 1337.1337
-puts dbf.read_string_attribute(0, dbf.get_field_index("field_0")) == 'Record 0 Field 0'
-puts dbf.is_attribute_null(0, dbf.get_field_index("null_0")) == 1
-puts dbf.is_record_deleted(0) == 0
-puts dbf.mark_record_deleted(0, 1) == 1
-puts dbf.is_record_deleted(0) == 1
-puts dbf.get_native_field_type(dbf.get_field_index("integer_0")) == SHP::DBF::FT_NATIVE_TYPE_INTEGER
-puts dbf.get_native_field_type(dbf.get_field_index("double_0")) == SHP::DBF::FT_NATIVE_TYPE_DOUBLE
-puts dbf.get_native_field_type(dbf.get_field_index("field_0")) == SHP::DBF::FT_NATIVE_TYPE_STRING
+def expect(description)
+  expectation = yield
+  puts "OK     : #{description}" if expectation
+  puts "NOT OK : #{description}" if !expectation
+end
+
+expect 'get_info to return the shapefile info' do
+  info = shp.get_info
+  info[:number_of_entities] == 2001 && info[:shape_type] == 1
+end
+
+expect 'get_field_count to return the field count' do
+  dbf.get_field_count == 104
+end
+
+expect 'get_record_count to return the record count' do
+  dbf.get_record_count == 2001
+end
+
+expect 'get_field_index to return the field index' do
+  dbf.get_field_index("field_1") == 1
+end
+
+expect 'get_field_info to return the field info' do
+  dbf.get_field_info(0) == { name: "field_0", type: 0, width: 254, decimals: 0 }
+end
+
+expect 'read_integer_attribute to read the correct integer value' do
+  dbf.read_integer_attribute(0, dbf.get_field_index("integer_0")) == 1337
+end
+
+expect 'read_double_attribute to read the correct double value' do
+  dbf.read_double_attribute(0, dbf.get_field_index("double_0")) == 1337.1337
+end
+
+expect 'read_string_attribute to read the correct string value' do
+  dbf.read_string_attribute(0, dbf.get_field_index("field_0")) == 'Record 0 Field 0'
+end
+
+expect 'is_attribute_null to check if an attribute is NULL' do
+  dbf.is_attribute_null(0, dbf.get_field_index("null_0")) == 1
+end
+
+expect 'is_record_deleted to return 0 when a record has not been deleted' do
+  dbf.is_record_deleted(0) == 0
+end
+
+expect 'mark_record_deleted to mark a record as deleted' do
+  dbf.mark_record_deleted(0, 1) == 1
+end
+
+expect 'is_record_deleted to return 1 when a record has been deleted' do
+  dbf.is_record_deleted(0) == 1
+end
+
+expect 'get_native_field_type on integer to be correct' do
+  dbf.get_native_field_type(dbf.get_field_index("integer_0")) == SHP::DBF::FT_NATIVE_TYPE_INTEGER
+end
+
+expect 'get_native_field_type on double to be correct' do
+  dbf.get_native_field_type(dbf.get_field_index("double_0")) == SHP::DBF::FT_NATIVE_TYPE_DOUBLE
+end
+
+expect 'get_native_field_type' do
+  dbf.get_native_field_type(dbf.get_field_index("field_0")) == SHP::DBF::FT_NATIVE_TYPE_STRING
+end
 
 dbf.close
 shp.close
