@@ -30,3 +30,4 @@ tmp
 ext/shp/Makefile
 test/testfile*
 ext/shp/mkmf.log
+ext/shp/shapelib/libshp.a

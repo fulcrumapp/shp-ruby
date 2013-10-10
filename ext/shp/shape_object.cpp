@@ -21,10 +21,20 @@ shape_object::~shape_object() {
   }
 }
 
+VALUE shape_object::compute_extents(VALUE self)
+{
+  shape_object *object = unwrap(self);
+
+  SHPComputeExtents(object->value());
+
+  return object->wrapped();
+}
+
 void shape_object::define(VALUE module)
 {
   shape_object::_klass = rb_define_class_under(module, "ShapeObject", rb_cObject);
   base::define(shape_object::_klass);
+  rb_define_method(shape_object::_klass, "compute_extents", SHP_METHOD(shape_object::compute_extents), 0);
 }
 
 }
