@@ -195,6 +195,17 @@ VALUE dbf::get_record_count(VALUE self)
   return INT2FIX(recordCount);
 }
 
+VALUE dbf::get_field_index(VALUE self, VALUE fieldName)
+{
+  CHECK_ARGUMENT_STRING(fieldName);
+
+  dbf *db = unwrap(self);
+
+  int fieldIndex = DBFGetFieldIndex(db->value(), RSTRING_PTR(fieldName));
+
+  return INT2FIX(fieldIndex);
+}
+
 void dbf::define(VALUE module)
 {
   dbf::_klass = rb_define_class_under(module, "DBF", rb_cObject);
@@ -209,6 +220,7 @@ void dbf::define(VALUE module)
   rb_define_method(dbf::_klass, "close", SHP_METHOD(dbf::close), 0);
   rb_define_method(dbf::_klass, "get_field_count", SHP_METHOD(dbf::get_field_count), 0);
   rb_define_method(dbf::_klass, "get_record_count", SHP_METHOD(dbf::get_record_count), 0);
+  rb_define_method(dbf::_klass, "get_field_index", SHP_METHOD(dbf::get_field_index), 1);
 }
 
 }

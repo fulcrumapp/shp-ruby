@@ -21,6 +21,7 @@ namespace shp {
     static VALUE close(VALUE self);
     static VALUE get_field_count(VALUE self);
     static VALUE get_record_count(VALUE self);
+    static VALUE get_field_index(VALUE self, VALUE fieldName);
 
     virtual VALUE klass();
     static VALUE _klass;

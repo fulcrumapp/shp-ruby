@@ -33,8 +33,9 @@ end
 end
 
 puts shp.get_info
-puts dbf.get_field_count
-puts dbf.get_record_count
+puts dbf.get_field_count == 101
+puts dbf.get_record_count == 2001
+puts dbf.get_field_index("field_1") == 1
 
 dbf.close
 shp.close
