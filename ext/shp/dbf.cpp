@@ -166,6 +166,20 @@ VALUE dbf::write_null_attribute(VALUE self, VALUE recordNumber, VALUE fieldIndex
   return INT2FIX(result);
 }
 
+VALUE dbf::read_integer_attribute(VALUE self, VALUE recordIndex, VALUE fieldIndex)
+{
+  CHECK_ARGUMENT_FIXNUM(recordIndex);
+  CHECK_ARGUMENT_FIXNUM(fieldIndex);
+
+  dbf *db = unwrap(self);
+
+  int result = DBFReadIntegerAttribute(db->value(),
+                                       FIX2INT(recordIndex),
+                                       FIX2INT(fieldIndex));
+
+  return INT2FIX(result);
+}
+
 VALUE dbf::close(VALUE self)
 {
   dbf *db = unwrap(self);
@@ -217,10 +231,10 @@ VALUE dbf::get_field_info(VALUE self, VALUE fieldIndex)
   int fieldDecimals = -1;
 
   DBFFieldType type = DBFGetFieldInfo(db->value(),
-                                     FIX2INT(fieldIndex),
-                                     fieldName,
-                                     &fieldWidth,
-                                     &fieldDecimals);
+                                      FIX2INT(fieldIndex),
+                                      fieldName,
+                                      &fieldWidth,
+                                      &fieldDecimals);
 
   VALUE hash = rb_hash_new();
 
@@ -248,6 +262,7 @@ void dbf::define(VALUE module)
   rb_define_method(dbf::_klass, "get_record_count", SHP_METHOD(dbf::get_record_count), 0);
   rb_define_method(dbf::_klass, "get_field_index", SHP_METHOD(dbf::get_field_index), 1);
   rb_define_method(dbf::_klass, "get_field_info", SHP_METHOD(dbf::get_field_info), 1);
+  rb_define_method(dbf::_klass, "read_integer_attribute", SHP_METHOD(dbf::read_integer_attribute), 2);
 }
 
 }

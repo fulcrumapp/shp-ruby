@@ -18,6 +18,7 @@ namespace shp {
     static VALUE write_double_attribute(VALUE self, VALUE recordNumber, VALUE fieldIndex, VALUE fieldValue);
     static VALUE write_string_attribute(VALUE self, VALUE recordNumber, VALUE fieldIndex, VALUE fieldValue);
     static VALUE write_null_attribute(VALUE self, VALUE recordNumber, VALUE fieldIndex);
+    static VALUE read_integer_attribute(VALUE self, VALUE recordIndex, VALUE fieldIndex);
     static VALUE close(VALUE self);
     static VALUE get_field_count(VALUE self);
     static VALUE get_record_count(VALUE self);
