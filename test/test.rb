@@ -98,7 +98,7 @@ expect 'get_native_field_type on double to be correct' do
   dbf.get_native_field_type(dbf.get_field_index("double_0")) == SHP::DBF::FT_NATIVE_TYPE_DOUBLE
 end
 
-expect 'get_native_field_type' do
+expect 'get_native_field_type on string to be correct' do
   dbf.get_native_field_type(dbf.get_field_index("field_0")) == SHP::DBF::FT_NATIVE_TYPE_STRING
 end
 
@@ -107,4 +107,5 @@ shp.close
 
 # write .prj file
 prj_content = 'GEOGCS["GCS_WGS_1984",DATUM["D_WGS_1984",SPHEROID["WGS_1984",6378137,298.257223563]],PRIMEM["Greenwich",0],UNIT["Degree",0.017453292519943295]]'
+
 File.open("testfile.prj", "wb") {|f| f.write(prj_content)}
