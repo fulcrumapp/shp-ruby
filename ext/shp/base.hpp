@@ -44,15 +44,13 @@ namespace shp {
 
     virtual void mark() {}
     virtual void dispose() {}
-    virtual VALUE initialize(int argc, VALUE *argv) { return rvalue(); }
+    virtual VALUE initialize(int argc, VALUE *argv) { return wrapped(); }
 
     virtual VALUE klass() {
       return Qnil;
     }
 
     virtual ~base() {}
-
-    VALUE rvalue() { return _value; }
 
     static T *unwrap(VALUE self) {
       T *obj = NULL;
@@ -63,8 +61,8 @@ namespace shp {
   protected:
     VALUE _value;
 
-    static base<T> *object(void *ptr) {
-      return (base *)ptr;
+    static T *object(void *ptr) {
+      return static_cast<T *>(ptr);
     }
 
     static void mark(void *ptr) {
