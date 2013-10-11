@@ -180,6 +180,9 @@ VALUE shapefile::rewind_object(VALUE self, VALUE shapeObject) {
   shapefile *file = unwrap(self);
   shape_object *shape = shape_object::unwrap(shapeObject);
 
+  CHECK_VALID_HANDLE(file->value());
+  CHECK_VALID_HANDLE(shape->value());
+
   if (shape == NULL) {
     SHP_FATAL("You must specify a valid shape.");
     return Qnil;
@@ -193,6 +196,8 @@ VALUE shapefile::rewind_object(VALUE self, VALUE shapeObject) {
 VALUE shapefile::get_info(VALUE self)
 {
   shapefile *file = unwrap(self);
+
+  CHECK_VALID_HANDLE(file->value());
 
   int numberOfEntities = 0;
   int shapeType = 0;
@@ -234,6 +239,8 @@ VALUE shapefile::read_object(VALUE self, VALUE shapeIndex)
 
   shapefile *file = unwrap(self);
 
+  CHECK_VALID_HANDLE(file->value());
+
   SHPObject *object = SHPReadObject(file->value(), FIX2INT(shapeIndex));
 
   if (object == NULL) {
@@ -253,6 +260,9 @@ VALUE shapefile::write_object(VALUE self, VALUE shapeIndex, VALUE shapeObject)
   shapefile *file = unwrap(self);
   shape_object *object = shape_object::unwrap(shapeObject);
 
+  CHECK_VALID_HANDLE(file->value());
+  CHECK_VALID_HANDLE(object->value());
+
   int result = SHPWriteObject(file->value(), FIX2INT(shapeIndex), object->value());
 
   return INT2FIX(result);
@@ -261,6 +271,8 @@ VALUE shapefile::write_object(VALUE self, VALUE shapeIndex, VALUE shapeObject)
 VALUE shapefile::close(VALUE self)
 {
   shapefile *file = unwrap(self);
+
+  CHECK_VALID_HANDLE(file->value());
 
   SHPClose(file->value());
 
