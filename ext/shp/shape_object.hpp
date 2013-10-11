@@ -11,6 +11,7 @@ namespace shp {
     shape_object(SHPObject *handle);
     static void define(VALUE module);
     static VALUE compute_extents(VALUE self);
+    static VALUE destroy(VALUE self);
 
     virtual VALUE klass();
     static VALUE _klass;

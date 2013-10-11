@@ -38,4 +38,10 @@ typedef VALUE (*RB_INSTANCE_METHOD)(...);
     return Qnil; \
   }
 
+#define CHECK_VALID_HANDLE(handle) \
+  if (handle == NULL) { \
+    SHP_FATAL("Invalid object reference. Has it already been destroyed?"); \
+    return Qnil; \
+  }
+
 #endif

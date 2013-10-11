@@ -104,6 +104,18 @@ describe "SHP" do
   it 'get_native_field_type on string to be correct' do
     @dbf.get_native_field_type(@dbf.get_field_index("field_0")).should eq(SHP::DBF::FT_NATIVE_TYPE_STRING)
   end
+
+  it 'should raise an error when destroy is called twice' do
+    shape = @shp.create_simple_object(1, 1, [-82.1], [-27.2], nil)
+    lambda { shape.destroy }.should_not raise_error
+    lambda { shape.destroy }.should raise_error
+  end
+
+  it 'should raise an error when calling a method after it has been destroyed' do
+    shape = @shp.create_simple_object(1, 1, [-82.1], [-27.2], nil)
+    lambda { shape.destroy }.should_not raise_error
+    lambda { shape.compute_extents }.should raise_error
+  end
 end
 
 
