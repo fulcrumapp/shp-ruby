@@ -10,7 +10,6 @@ using namespace std;
 
 typedef VALUE (*RB_INSTANCE_METHOD)(...);
 
-#define SHP_IS_FAILURE(hr) ((hr) != S_OK)
 #define SHP_FATAL(msg) rb_raise(rb_eRuntimeError, msg)
 #define SHP_FATAL_ARGUMENT(msg) rb_raise(rb_eArgError, msg)
 #define SHP_METHOD(method) ((RB_INSTANCE_METHOD)&method)
@@ -38,10 +37,5 @@ typedef VALUE (*RB_INSTANCE_METHOD)(...);
     SHP_FATAL_ARGUMENT("Argument must be an Array"); \
     return Qnil; \
   }
-
-std::wstring to_wstring(const char *input);
-const char *to_char_array(std::wstring str);
-
-extern VALUE shp_klass;
 
 #endif
