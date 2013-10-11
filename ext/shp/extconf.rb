@@ -4,7 +4,9 @@ shp_ruby_path = ENV['SHP_RUBY_PATH'] || '../../../..'
 
 local_path = File.expand_path("#{ENV['SHP_RUBY_PATH']}/ext/shp/shapelib")
 
-system("pushd #{local_path} && make clean && make && popd")
+current_dir = Dir.pwd
+
+system("cd #{local_path} && make clean && make && cd #{current_dir}")
 
 dir_config '', local_path, local_path
 
