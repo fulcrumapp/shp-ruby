@@ -18,7 +18,7 @@ describe "SHP" do
     @dbf.add_field("null_0", 1, 2^31, 0)
 
     (0..2000).each do |num|
-      shape = @shp.create_simple_object(1, 1, [rnd.rand(lon_range)], [rnd.rand(lat_range)], nil)
+      shape = SHP::Shapefile.create_simple_object(1, 1, [rnd.rand(lon_range)], [rnd.rand(lat_range)], nil)
       @shp.write_object(-1, shape)
       shape.compute_extents
       @shp.rewind_object(shape)
@@ -106,13 +106,13 @@ describe "SHP" do
   end
 
   it 'should raise an error when destroy is called twice' do
-    shape = @shp.create_simple_object(1, 1, [-82.1], [-27.2], nil)
+    shape = SHP::Shapefile.create_simple_object(1, 1, [-82.1], [-27.2], nil)
     lambda { shape.destroy }.should_not raise_error
     lambda { shape.destroy }.should raise_error
   end
 
   it 'should raise an error when calling a method after it has been destroyed' do
-    shape = @shp.create_simple_object(1, 1, [-82.1], [-27.2], nil)
+    shape = SHP::Shapefile.create_simple_object(1, 1, [-82.1], [-27.2], nil)
     lambda { shape.destroy }.should_not raise_error
     lambda { shape.compute_extents }.should raise_error
   end

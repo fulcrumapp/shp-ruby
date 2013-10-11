@@ -39,7 +39,7 @@ VALUE shapefile::create(VALUE klass, VALUE filename, VALUE shapeType)
   return shp->wrapped();
 }
 
-VALUE shapefile::create_simple_object(VALUE self, VALUE shapeType, VALUE numberOfVertices, VALUE arrayOfX, VALUE arrayOfY, VALUE arrayOfZ)
+VALUE shapefile::create_simple_object(VALUE klass, VALUE shapeType, VALUE numberOfVertices, VALUE arrayOfX, VALUE arrayOfY, VALUE arrayOfZ)
 {
   CHECK_ARGUMENT_FIXNUM(shapeType);
   CHECK_ARGUMENT_FIXNUM(numberOfVertices);
@@ -88,7 +88,7 @@ VALUE shapefile::create_simple_object(VALUE self, VALUE shapeType, VALUE numberO
 }
 
 
-VALUE shapefile::create_object(VALUE self, VALUE shapeType, VALUE shapeIndex, VALUE numberOfParts,
+VALUE shapefile::create_object(VALUE klass, VALUE shapeType, VALUE shapeIndex, VALUE numberOfParts,
                                VALUE arrayOfPartStarts, VALUE arrayOfPartTypes, VALUE numberOfVertices,
                                VALUE arrayOfX, VALUE arrayOfY, VALUE arrayOfZ, VALUE arrayOfM)
 {
@@ -286,8 +286,8 @@ void shapefile::define(VALUE module)
   shapefile::_klass = rb_define_class_under(module, "Shapefile", rb_cObject);
   base::define(shapefile::_klass, false);
   rb_define_singleton_method(shapefile::_klass, "create", SHP_METHOD(shapefile::create), 2);
-  rb_define_method(shapefile::_klass, "create_simple_object", SHP_METHOD(shapefile::create_simple_object), 5);
-  rb_define_method(shapefile::_klass, "create_object", SHP_METHOD(shapefile::create_simple_object), 10);
+  rb_define_singleton_method(shapefile::_klass, "create_simple_object", SHP_METHOD(shapefile::create_simple_object), 5);
+  rb_define_singleton_method(shapefile::_klass, "create_object", SHP_METHOD(shapefile::create_simple_object), 10);
   rb_define_method(shapefile::_klass, "write_object", SHP_METHOD(shapefile::write_object), 2);
   rb_define_method(shapefile::_klass, "close", SHP_METHOD(shapefile::close), 0);
   rb_define_method(shapefile::_klass, "get_info", SHP_METHOD(shapefile::get_info), 0);
