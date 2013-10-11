@@ -7,6 +7,7 @@ Gem::Specification.new do |gem|
   gem.description   = %q{ESRI Shapefile bindings for ruby using shapelib}
   gem.summary       = %q{ESRI Shapefile bindings for ruby using shapelib. Currently contains native extensions for ShapeLib 1.3}
   gem.homepage      = "https://github.com/spatialnetworks/shp-ruby"
+  gem.licenses      = ['BSD']
 
   gem.files         = `git ls-files`.split($\)
   gem.extensions    = ['ext/shp/extconf.rb']
