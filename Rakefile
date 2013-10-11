@@ -16,7 +16,6 @@ Rake::ExtensionTask.new('shp') do |ext|
 end
 
 RSpec::Core::RakeTask.new(:spec) do |spec|
-  ENV['SHP_RUBY_PATH'] = File.expand_path('.')
   Rake::Task['compile'].invoke
   spec.pattern = FileList['spec/**/*_spec.rb']
 end

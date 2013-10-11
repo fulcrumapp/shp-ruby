@@ -1,14 +1,10 @@
 require 'mkmf'
 
-shp_ruby_path = ENV['SHP_RUBY_PATH'] || '../../../..'
+shapelib_path = File.expand_path("#{File.dirname(__FILE__)}/shapelib")
 
-local_path = File.expand_path("#{ENV['SHP_RUBY_PATH']}/ext/shp/shapelib")
+system "cd #{shapelib_path} && make clean && make && cd #{Dir.pwd}"
 
-current_dir = Dir.pwd
-
-system("cd #{local_path} && make clean && make && cd #{current_dir}")
-
-dir_config '', local_path, local_path
+dir_config '', shapelib_path, shapelib_path
 
 have_library 'shp' or raise 'libshp not found'
 
