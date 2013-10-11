@@ -63,6 +63,8 @@ VALUE dbf::add_field(VALUE self, VALUE fieldName, VALUE fieldType, VALUE fieldWi
 
   dbf *db = unwrap(self);
 
+  CHECK_VALID_HANDLE(db->value());
+
   std::string theFieldName(RSTRING_PTR(fieldName));
 
   int result = DBFAddField(db->value(),
@@ -87,6 +89,8 @@ VALUE dbf::write_integer_attribute(VALUE self, VALUE recordNumber, VALUE fieldIn
 
   dbf *db = unwrap(self);
 
+  CHECK_VALID_HANDLE(db->value());
+
   int result = DBFWriteIntegerAttribute(db->value(),
                                         FIX2INT(recordNumber),
                                         FIX2INT(fieldIndex),
@@ -107,6 +111,8 @@ VALUE dbf::write_double_attribute(VALUE self, VALUE recordNumber, VALUE fieldInd
   CHECK_ARGUMENT_FLOAT(fieldValue);
 
   dbf *db = unwrap(self);
+
+  CHECK_VALID_HANDLE(db->value());
 
   int result = DBFWriteDoubleAttribute(db->value(),
                                        FIX2INT(recordNumber),
@@ -129,6 +135,8 @@ VALUE dbf::write_string_attribute(VALUE self, VALUE recordNumber, VALUE fieldInd
 
   dbf *db = unwrap(self);
 
+  CHECK_VALID_HANDLE(db->value());
+
   int result = DBFWriteStringAttribute(db->value(),
                                        FIX2INT(recordNumber),
                                        FIX2INT(fieldIndex),
@@ -149,6 +157,8 @@ VALUE dbf::write_null_attribute(VALUE self, VALUE recordNumber, VALUE fieldIndex
 
   dbf *db = unwrap(self);
 
+  CHECK_VALID_HANDLE(db->value());
+
   int result = DBFWriteNULLAttribute(db->value(),
                                      FIX2INT(recordNumber),
                                      FIX2INT(fieldIndex));
@@ -168,6 +178,8 @@ VALUE dbf::read_integer_attribute(VALUE self, VALUE recordIndex, VALUE fieldInde
 
   dbf *db = unwrap(self);
 
+  CHECK_VALID_HANDLE(db->value());
+
   int result = DBFReadIntegerAttribute(db->value(),
                                        FIX2INT(recordIndex),
                                        FIX2INT(fieldIndex));
@@ -181,6 +193,8 @@ VALUE dbf::read_double_attribute(VALUE self, VALUE recordIndex, VALUE fieldIndex
   CHECK_ARGUMENT_FIXNUM(fieldIndex);
 
   dbf *db = unwrap(self);
+
+  CHECK_VALID_HANDLE(db->value());
 
   double result = DBFReadDoubleAttribute(db->value(),
                                          FIX2INT(recordIndex),
@@ -196,6 +210,8 @@ VALUE dbf::read_string_attribute(VALUE self, VALUE recordIndex, VALUE fieldIndex
 
   dbf *db = unwrap(self);
 
+  CHECK_VALID_HANDLE(db->value());
+
   const char *result = DBFReadStringAttribute(db->value(),
                                               FIX2INT(recordIndex),
                                               FIX2INT(fieldIndex));
@@ -210,6 +226,8 @@ VALUE dbf::is_attribute_null(VALUE self, VALUE recordIndex, VALUE fieldIndex)
 
   dbf *db = unwrap(self);
 
+  CHECK_VALID_HANDLE(db->value());
+
   int result = DBFIsAttributeNULL(db->value(),
                                   FIX2INT(recordIndex),
                                   FIX2INT(fieldIndex));
@@ -220,6 +238,8 @@ VALUE dbf::is_attribute_null(VALUE self, VALUE recordIndex, VALUE fieldIndex)
 VALUE dbf::close(VALUE self)
 {
   dbf *db = unwrap(self);
+
+  CHECK_VALID_HANDLE(db->value());
 
   DBFClose(db->value());
 
@@ -232,6 +252,8 @@ VALUE dbf::get_field_count(VALUE self)
 {
   dbf *db = unwrap(self);
 
+  CHECK_VALID_HANDLE(db->value());
+
   int fieldCount = DBFGetFieldCount(db->value());
 
   return INT2FIX(fieldCount);
@@ -240,6 +262,8 @@ VALUE dbf::get_field_count(VALUE self)
 VALUE dbf::get_record_count(VALUE self)
 {
   dbf *db = unwrap(self);
+
+  CHECK_VALID_HANDLE(db->value());
 
   int recordCount = DBFGetRecordCount(db->value());
 
@@ -252,6 +276,8 @@ VALUE dbf::get_field_index(VALUE self, VALUE fieldName)
 
   dbf *db = unwrap(self);
 
+  CHECK_VALID_HANDLE(db->value());
+
   int fieldIndex = DBFGetFieldIndex(db->value(), RSTRING_PTR(fieldName));
 
   return INT2FIX(fieldIndex);
@@ -262,6 +288,8 @@ VALUE dbf::get_field_info(VALUE self, VALUE fieldIndex)
   CHECK_ARGUMENT_FIXNUM(fieldIndex);
 
   dbf *db = unwrap(self);
+
+  CHECK_VALID_HANDLE(db->value());
 
   char fieldName[12];
   int fieldWidth = -1;
@@ -289,6 +317,8 @@ VALUE dbf::is_record_deleted(VALUE self, VALUE recordIndex)
 
   dbf *db = unwrap(self);
 
+  CHECK_VALID_HANDLE(db->value());
+
   int result = DBFIsRecordDeleted(db->value(), FIX2INT(recordIndex));
 
   return INT2FIX(result);
@@ -300,6 +330,8 @@ VALUE dbf::mark_record_deleted(VALUE self, VALUE recordIndex, VALUE isDeleted)
 
   dbf *db = unwrap(self);
 
+  CHECK_VALID_HANDLE(db->value());
+
   int result = DBFMarkRecordDeleted(db->value(), FIX2INT(recordIndex), FIX2INT(isDeleted));
 
   return INT2FIX(result);
@@ -310,6 +342,8 @@ VALUE dbf::get_native_field_type(VALUE self, VALUE fieldIndex)
   CHECK_ARGUMENT_FIXNUM(fieldIndex);
 
   dbf *db = unwrap(self);
+
+  CHECK_VALID_HANDLE(db->value());
 
   char result = DBFGetNativeFieldType(db->value(), FIX2INT(fieldIndex));
 

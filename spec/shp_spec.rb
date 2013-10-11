@@ -116,6 +116,12 @@ describe "SHP" do
     lambda { shape.destroy }.should_not raise_error
     lambda { shape.compute_extents }.should raise_error
   end
+
+  it 'should raise an error when calling a method after it has been closed' do
+    file = SHP::Shapefile.create("testfile2", 1)
+    lambda { file.close }.should_not raise_error
+    lambda { file.get_info }.should raise_error
+  end
 end
 
 
