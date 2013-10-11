@@ -1,4 +1,4 @@
-# shp-ruby
+# shp-ruby [![Build Status](https://secure.travis-ci.org/spatialnetworks/shp-ruby.png)](http://travis-ci.org/spatialnetworks/shp-ruby)
 
 Native bindings for Shapelib. This gem includes an embedded copy of Shapelib so it doesn't require any
 system libraries to be installed and can be installed with just gem/bundler.
@@ -8,8 +8,8 @@ add any Ruby sugar on top of Shapelib. A more Ruby-like API can be implemented *
 
 Docs for the native API:
 
-[SHP](http://shapelib.maptools.org/shp_api.html)
-[DBF](http://shapelib.maptools.org/dbf_api.html)
+* [SHP](http://shapelib.maptools.org/shp_api.html)
+* [DBF](http://shapelib.maptools.org/dbf_api.html)
 
 ## Installation
 
