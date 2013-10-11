@@ -29,5 +29,6 @@ tmp
 *shptreedump*
 ext/shp/Makefile
 test/testfile*
+testfile*
 ext/shp/mkmf.log
 ext/shp/shapelib/libshp.a

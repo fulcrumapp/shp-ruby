@@ -15,4 +15,8 @@ Gem::Specification.new do |gem|
   gem.name          = "shp"
   gem.require_paths = ['lib', 'ext']
   gem.version       = SHP::VERSION
+
+  gem.add_development_dependency 'rake',          ['>= 0']
+  gem.add_development_dependency 'rake-compiler', ['>= 0']
+  gem.add_development_dependency 'rspec',         ['>= 0']
 end
