@@ -9,7 +9,6 @@ namespace shp {
   public:
     shapefile() : base<shapefile>(), _handle(0) {};
     shapefile(SHPHandle handle);
-    virtual VALUE initialize(int argc, VALUE *argv);
     static void define(VALUE module);
     static VALUE create(VALUE klass, VALUE filename, VALUE shapeType);
     static VALUE create_simple_object(VALUE self, VALUE shapeType, VALUE numberOfVertices, VALUE arrayOfX, VALUE arrayOfY, VALUE arrayOfZ);

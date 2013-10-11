@@ -9,7 +9,6 @@ namespace shp {
   public:
     dbf() : base<dbf>(), _handle(0) {};
     dbf(DBFHandle handle);
-    virtual VALUE initialize(int argc, VALUE *argv);
     static void define(VALUE module);
     static VALUE create(VALUE klass, VALUE filename);
     static VALUE open(VALUE klass, VALUE filename, VALUE access);

@@ -19,6 +19,16 @@ namespace shp {
       return rvalue;
     }
 
+    static VALUE new_instance_not_allowed(int argc, VALUE *argv, VALUE klass) {
+      rb_raise(rb_eRuntimeError, "You cannot use #new on this class.");
+      return Qnil;
+    }
+
+    static VALUE initialize_instance_not_allowed(int argc, VALUE *argv, VALUE klass) {
+      rb_raise(rb_eRuntimeError, "You cannot use #initialize on this class.");
+      return Qnil;
+    }
+
     VALUE wrapped() {
       if (!_value) {
         _value = Data_Wrap_Struct(klass(), base<T>::mark, base<T>::dispose, this);
@@ -65,9 +75,15 @@ namespace shp {
       delete base::object(ptr);
     }
 
-    static void define(VALUE klass) {
-      rb_define_singleton_method(klass, "new", SHP_METHOD(base<T>::new_instance), -1);
-      rb_define_method(klass, "initialize", SHP_METHOD(base<T>::initialize_instance), -1);
+    static void define(VALUE klass, bool allowNew) {
+      if (allowNew) {
+        rb_define_singleton_method(klass, "new", SHP_METHOD(base<T>::new_instance), -1);
+        rb_define_method(klass, "initialize", SHP_METHOD(base<T>::initialize_instance), -1);
+      }
+      else {
+        rb_define_singleton_method(klass, "new", SHP_METHOD(base<T>::new_instance_not_allowed), -1);
+        rb_define_method(klass, "initialize", SHP_METHOD(base<T>::initialize_instance_not_allowed), -1);
+      }
     }
 
     VALUE initialize_not_allowed()
