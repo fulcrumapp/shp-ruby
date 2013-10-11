@@ -6,7 +6,7 @@ Gem::Specification.new do |gem|
   gem.email         = ["zac.mccormick@gmail.com"]
   gem.description   = %q{ESRI Shapefile bindings for ruby using shapelib}
   gem.summary       = %q{ESRI Shapefile bindings for ruby using shapelib. Currently contains native extensions for ShapeLib 1.3}
-  gem.homepage      = "https://github.com/zhm/shp-ruby"
+  gem.homepage      = "https://github.com/spatialnetworks/shp-ruby"
 
   gem.files         = `git ls-files`.split($\)
   gem.extensions    = ['ext/shp/extconf.rb']
@@ -15,8 +15,4 @@ Gem::Specification.new do |gem|
   gem.name          = "shp"
   gem.require_paths = ['lib', 'ext']
   gem.version       = SHP::VERSION
-
-  # gem.add_development_dependency 'rake',          ['>= 0']
-  # gem.add_development_dependency 'rake-compiler', ['>= 0']
-  # gem.add_development_dependency 'rspec',         ['>= 0']
 end
