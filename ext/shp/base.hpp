@@ -2,6 +2,7 @@
 #define __SHP_BASE_HPP__
 
 #include <vector>
+#include <algorithm>
 #include "shp.hpp"
 
 namespace shp {
