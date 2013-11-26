@@ -22,6 +22,23 @@ shapefile::~shapefile() {
   }
 }
 
+VALUE shapefile::open(VALUE klass, VALUE filename, VALUE accessType)
+{
+  CHECK_ARGUMENT_STRING(filename);
+  CHECK_ARGUMENT_STRING(accessType);
+
+  SHPHandle handle = SHPOpen(RSTRING_PTR(filename), RSTRING_PTR(accessType));
+
+  if (handle == NULL) {
+    SHP_FATAL("Failed to open shapefile.");
+    return Qnil;
+  }
+
+  shapefile *shp = new shapefile(handle);
+
+  return shp->wrapped();
+}
+
 VALUE shapefile::create(VALUE klass, VALUE filename, VALUE shapeType)
 {
   CHECK_ARGUMENT_STRING(filename);
@@ -285,6 +302,7 @@ void shapefile::define(VALUE module)
 {
   shapefile::_klass = rb_define_class_under(module, "Shapefile", rb_cObject);
   base::define(shapefile::_klass, false);
+  rb_define_singleton_method(shapefile::_klass, "open", SHP_METHOD(shapefile::open), 2);
   rb_define_singleton_method(shapefile::_klass, "create", SHP_METHOD(shapefile::create), 2);
   rb_define_singleton_method(shapefile::_klass, "create_simple_object", SHP_METHOD(shapefile::create_simple_object), 5);
   rb_define_singleton_method(shapefile::_klass, "create_object", SHP_METHOD(shapefile::create_simple_object), 10);

@@ -43,6 +43,11 @@ describe "SHP" do
     File.open("testfile.prj", "wb") {|f| f.write(prj_content)}
   end
 
+  it 'open should open a shapefile for reading' do
+    shp = SHP::Shapefile.open('testfile', 'rb')
+    shp.should_not be_nil
+  end
+
   it 'get_info to return the shapefile info' do
     info = @shp.get_info
     info[:number_of_entities].should eq(2001)
