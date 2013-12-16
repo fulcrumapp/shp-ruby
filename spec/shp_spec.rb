@@ -180,5 +180,13 @@ describe "SHP" do
     it 'should return the y values' do
       @obj.get_y.should eq([27.93789618055838, 27.93768765436987, 27.93767817589719, 27.93719003343022, 27.93717581565543, 27.93741277832466, 27.93741751757274, 27.93788670210399, 27.93789618055838])
     end
+
+    it 'should return the z values' do
+      @obj.get_z.should eq([0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0])
+    end
+
+    it 'should return the m values' do
+      @obj.get_z.should eq([0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0])
+    end
   end
 end
