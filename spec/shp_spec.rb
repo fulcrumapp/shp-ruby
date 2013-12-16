@@ -127,6 +127,22 @@ describe "SHP" do
     lambda { file.close }.should_not raise_error
     lambda { file.get_info }.should raise_error
   end
+
+  context 'shp' do
+    before(:each) do
+      @shp = SHP::Shapefile.open('testfile', 'rb+')
+      @shape = SHP::Shapefile.create_simple_object(1, 1, [-82.1337], [27.1337], nil)
+      @shp.write_object(-1, @shape)
+    end
+
+    it 'should return the shape type' do
+      obj = @shp.read_object(0)
+      obj.get_shape_type.should eq(1)
+    end
+
+    it 'should return the shape id' do
+      obj = @shp.read_object(0)
+      obj.get_shape_id.should eq(0)
+    end
+  end
 end
-
-
