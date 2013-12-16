@@ -130,19 +130,35 @@ describe "SHP" do
 
   context 'shp' do
     before(:each) do
-      @shp = SHP::Shapefile.open('testfile', 'rb+')
-      @shape = SHP::Shapefile.create_simple_object(1, 1, [-82.1337], [27.1337], nil)
+      sni_office = [ [ -82.72932529449463, 27.93789618055838 ],
+                     [ -82.72932529449463, 27.93768765436987 ],
+                     [ -82.72909998893738, 27.93767817589719 ],
+                     [ -82.72911071777344, 27.93719003343022 ],
+                     [ -82.72869229316710, 27.93717581565543 ],
+                     [ -82.72868156433105, 27.93741277832466 ],
+                     [ -82.72886931896210, 27.93741751757274 ],
+                     [ -82.72886931896210, 27.93788670210399 ],
+                     [ -82.72932529449463, 27.93789618055838 ] ]
+
+      x_values = sni_office.map { |v| v[0] }
+      y_values = sni_office.map { |v| v[1] }
+
+      @shp = SHP::Shapefile.create('testfile_polygons', 5)
+      @shape = SHP::Shapefile.create_simple_object(5, x_values.count, x_values, y_values, nil)
       @shp.write_object(-1, @shape)
+      @obj = @shp.read_object(0)
     end
 
     it 'should return the shape type' do
-      obj = @shp.read_object(0)
-      obj.get_shape_type.should eq(1)
+      @obj.get_shape_type.should eq(5)
     end
 
     it 'should return the shape id' do
-      obj = @shp.read_object(0)
-      obj.get_shape_id.should eq(0)
+      @obj.get_shape_id.should eq(0)
+    end
+
+    it 'should return the shape part count' do
+      @obj.get_shape_parts.should eq(1)
     end
   end
 end
