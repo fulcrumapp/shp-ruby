@@ -164,5 +164,9 @@ describe "SHP" do
     it 'should return the shape part start offsets' do
       @obj.get_shape_part_starts.should eq([0])
     end
+
+    it 'should return the shape part types' do
+      @obj.get_shape_part_types.should eq([5]) # [SHPP_RING]
+    end
   end
 end

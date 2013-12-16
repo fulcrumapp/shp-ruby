@@ -92,6 +92,25 @@ VALUE shape_object::get_shape_part_starts(VALUE self)
   return result;
 }
 
+VALUE shape_object::get_shape_part_types(VALUE self)
+{
+  shape_object *object = unwrap(self);
+
+  CHECK_VALID_HANDLE(object->value());
+
+  VALUE result = rb_ary_new();
+
+  SHPObject *obj = object->value();
+
+  if (obj && obj->panPartType) {
+    for (int i = 0; i < obj->nParts; ++i) {
+      rb_ary_push(result, INT2FIX(obj->panPartType[i]));
+    }
+  }
+
+  return result;
+}
+
 /* VALUE shape_object::get_shape_parts(VALUE self); */
 /* VALUE shape_object::get_shape_part_starts(VALUE self); */
 /* VALUE shape_object::get_shape_part_types(VALUE self); */
@@ -118,6 +137,7 @@ void shape_object::define(VALUE module)
   rb_define_method(shape_object::_klass, "get_shape_id", SHP_METHOD(shape_object::get_shape_id), 0);
   rb_define_method(shape_object::_klass, "get_shape_parts", SHP_METHOD(shape_object::get_shape_parts), 0);
   rb_define_method(shape_object::_klass, "get_shape_part_starts", SHP_METHOD(shape_object::get_shape_part_starts), 0);
+  rb_define_method(shape_object::_klass, "get_shape_part_types", SHP_METHOD(shape_object::get_shape_part_types), 0);
   rb_define_method(shape_object::_klass, "destroy", SHP_METHOD(shape_object::destroy), 0);
 }
 
