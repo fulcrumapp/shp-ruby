@@ -172,5 +172,9 @@ describe "SHP" do
     it 'should return the vertex count' do
       @obj.get_vertex_count.should eq(9)
     end
+
+    it 'should return the x values' do
+      @obj.get_x.should eq([-82.72932529449463, -82.72932529449463, -82.72909998893738, -82.72911071777344, -82.7286922931671, -82.72868156433105, -82.7288693189621, -82.7288693189621, -82.72932529449463])
+    end
   end
 end

@@ -19,10 +19,10 @@ namespace shp {
     static VALUE get_shape_part_starts(VALUE self);
     static VALUE get_shape_part_types(VALUE self);
     static VALUE get_vertex_count(VALUE self);
-    /* static VALUE get_x(VALUE self); */
-    /* static VALUE get_y(VALUE self); */
-    /* static VALUE get_z(VALUE self); */
-    /* static VALUE get_m(VALUE self); */
+    static VALUE get_x(VALUE self);
+    static VALUE get_y(VALUE self);
+    static VALUE get_z(VALUE self);
+    static VALUE get_m(VALUE self);
     /* static VALUE get_x_min(VALUE self); */
     /* static VALUE get_y_min(VALUE self); */
     /* static VALUE get_z_min(VALUE self); */
