@@ -204,5 +204,21 @@ describe "SHP" do
     it 'should return the m min' do
       @obj.get_m_min.should eq(0)
     end
+
+    it 'should return the x max' do
+      @obj.get_x_max.should eq(-82.72868156433105)
+    end
+
+    it 'should return the y max' do
+      @obj.get_y_max.should eq(27.93789618055838)
+    end
+
+    it 'should return the z max' do
+      @obj.get_z_max.should eq(0)
+    end
+
+    it 'should return the m max' do
+      @obj.get_m_max.should eq(0)
+    end
   end
 end

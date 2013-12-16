@@ -232,22 +232,41 @@ VALUE shape_object::get_m_min(VALUE self)
   return rb_float_new(object->value()->dfMMin);
 }
 
-/* VALUE shape_object::get_shape_parts(VALUE self); */
-/* VALUE shape_object::get_shape_part_starts(VALUE self); */
-/* VALUE shape_object::get_shape_part_types(VALUE self); */
-/* VALUE shape_object::get_vertex_count(VALUE self); */
-/* VALUE shape_object::get_x(VALUE self); */
-/* VALUE shape_object::get_y(VALUE self); */
-/* VALUE shape_object::get_z(VALUE self); */
-/* VALUE shape_object::get_m(VALUE self); */
-/* VALUE shape_object::get_x_min(VALUE self); */
-/* VALUE shape_object::get_y_min(VALUE self); */
-/* VALUE shape_object::get_z_min(VALUE self); */
-/* VALUE shape_object::get_m_min(VALUE self); */
-/* VALUE shape_object::get_x_max(VALUE self); */
-/* VALUE shape_object::get_y_max(VALUE self); */
-/* VALUE shape_object::get_z_max(VALUE self); */
-/* VALUE shape_object::get_m_max(VALUE self); */
+VALUE shape_object::get_x_max(VALUE self)
+{
+  shape_object *object = unwrap(self);
+
+  CHECK_VALID_HANDLE(object->value());
+
+  return rb_float_new(object->value()->dfXMax);
+}
+
+VALUE shape_object::get_y_max(VALUE self)
+{
+  shape_object *object = unwrap(self);
+
+  CHECK_VALID_HANDLE(object->value());
+
+  return rb_float_new(object->value()->dfYMax);
+}
+
+VALUE shape_object::get_z_max(VALUE self)
+{
+  shape_object *object = unwrap(self);
+
+  CHECK_VALID_HANDLE(object->value());
+
+  return rb_float_new(object->value()->dfZMax);
+}
+
+VALUE shape_object::get_m_max(VALUE self)
+{
+  shape_object *object = unwrap(self);
+
+  CHECK_VALID_HANDLE(object->value());
+
+  return rb_float_new(object->value()->dfMMax);
+}
 
 void shape_object::define(VALUE module)
 {
@@ -268,6 +287,10 @@ void shape_object::define(VALUE module)
   rb_define_method(shape_object::_klass, "get_y_min", SHP_METHOD(shape_object::get_y_min), 0);
   rb_define_method(shape_object::_klass, "get_z_min", SHP_METHOD(shape_object::get_z_min), 0);
   rb_define_method(shape_object::_klass, "get_m_min", SHP_METHOD(shape_object::get_m_min), 0);
+  rb_define_method(shape_object::_klass, "get_x_max", SHP_METHOD(shape_object::get_x_max), 0);
+  rb_define_method(shape_object::_klass, "get_y_max", SHP_METHOD(shape_object::get_y_max), 0);
+  rb_define_method(shape_object::_klass, "get_z_max", SHP_METHOD(shape_object::get_z_max), 0);
+  rb_define_method(shape_object::_klass, "get_m_max", SHP_METHOD(shape_object::get_m_max), 0);
   rb_define_method(shape_object::_klass, "destroy", SHP_METHOD(shape_object::destroy), 0);
 }
 
