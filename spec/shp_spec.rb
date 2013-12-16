@@ -168,5 +168,9 @@ describe "SHP" do
     it 'should return the shape part types' do
       @obj.get_shape_part_types.should eq([5]) # [SHPP_RING]
     end
+
+    it 'should return the vertex count' do
+      @obj.get_vertex_count.should eq(9)
+    end
   end
 end

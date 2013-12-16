@@ -111,6 +111,15 @@ VALUE shape_object::get_shape_part_types(VALUE self)
   return result;
 }
 
+VALUE shape_object::get_vertex_count(VALUE self)
+{
+  shape_object *object = unwrap(self);
+
+  CHECK_VALID_HANDLE(object->value());
+
+  return INT2FIX(object->value()->nVertices);
+}
+
 /* VALUE shape_object::get_shape_parts(VALUE self); */
 /* VALUE shape_object::get_shape_part_starts(VALUE self); */
 /* VALUE shape_object::get_shape_part_types(VALUE self); */
@@ -138,6 +147,7 @@ void shape_object::define(VALUE module)
   rb_define_method(shape_object::_klass, "get_shape_parts", SHP_METHOD(shape_object::get_shape_parts), 0);
   rb_define_method(shape_object::_klass, "get_shape_part_starts", SHP_METHOD(shape_object::get_shape_part_starts), 0);
   rb_define_method(shape_object::_klass, "get_shape_part_types", SHP_METHOD(shape_object::get_shape_part_types), 0);
+  rb_define_method(shape_object::_klass, "get_vertex_count", SHP_METHOD(shape_object::get_vertex_count), 0);
   rb_define_method(shape_object::_klass, "destroy", SHP_METHOD(shape_object::destroy), 0);
 }
 
