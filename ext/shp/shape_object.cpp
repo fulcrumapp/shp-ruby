@@ -196,6 +196,42 @@ VALUE shape_object::get_m(VALUE self)
   return result;
 }
 
+VALUE shape_object::get_x_min(VALUE self)
+{
+  shape_object *object = unwrap(self);
+
+  CHECK_VALID_HANDLE(object->value());
+
+  return rb_float_new(object->value()->dfXMin);
+}
+
+VALUE shape_object::get_y_min(VALUE self)
+{
+  shape_object *object = unwrap(self);
+
+  CHECK_VALID_HANDLE(object->value());
+
+  return rb_float_new(object->value()->dfYMin);
+}
+
+VALUE shape_object::get_z_min(VALUE self)
+{
+  shape_object *object = unwrap(self);
+
+  CHECK_VALID_HANDLE(object->value());
+
+  return rb_float_new(object->value()->dfZMin);
+}
+
+VALUE shape_object::get_m_min(VALUE self)
+{
+  shape_object *object = unwrap(self);
+
+  CHECK_VALID_HANDLE(object->value());
+
+  return rb_float_new(object->value()->dfMMin);
+}
+
 /* VALUE shape_object::get_shape_parts(VALUE self); */
 /* VALUE shape_object::get_shape_part_starts(VALUE self); */
 /* VALUE shape_object::get_shape_part_types(VALUE self); */
@@ -228,6 +264,10 @@ void shape_object::define(VALUE module)
   rb_define_method(shape_object::_klass, "get_y", SHP_METHOD(shape_object::get_y), 0);
   rb_define_method(shape_object::_klass, "get_z", SHP_METHOD(shape_object::get_z), 0);
   rb_define_method(shape_object::_klass, "get_m", SHP_METHOD(shape_object::get_m), 0);
+  rb_define_method(shape_object::_klass, "get_x_min", SHP_METHOD(shape_object::get_x_min), 0);
+  rb_define_method(shape_object::_klass, "get_y_min", SHP_METHOD(shape_object::get_y_min), 0);
+  rb_define_method(shape_object::_klass, "get_z_min", SHP_METHOD(shape_object::get_z_min), 0);
+  rb_define_method(shape_object::_klass, "get_m_min", SHP_METHOD(shape_object::get_m_min), 0);
   rb_define_method(shape_object::_klass, "destroy", SHP_METHOD(shape_object::destroy), 0);
 }
 

@@ -188,5 +188,21 @@ describe "SHP" do
     it 'should return the m values' do
       @obj.get_z.should eq([0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0])
     end
+
+    it 'should return the x min' do
+      @obj.get_x_min.should eq(-82.72932529449463)
+    end
+
+    it 'should return the y min' do
+      @obj.get_y_min.should eq(27.93717581565543)
+    end
+
+    it 'should return the z min' do
+      @obj.get_z_min.should eq(0)
+    end
+
+    it 'should return the m min' do
+      @obj.get_m_min.should eq(0)
+    end
   end
 end

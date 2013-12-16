@@ -23,10 +23,10 @@ namespace shp {
     static VALUE get_y(VALUE self);
     static VALUE get_z(VALUE self);
     static VALUE get_m(VALUE self);
-    /* static VALUE get_x_min(VALUE self); */
-    /* static VALUE get_y_min(VALUE self); */
-    /* static VALUE get_z_min(VALUE self); */
-    /* static VALUE get_m_min(VALUE self); */
+    static VALUE get_x_min(VALUE self);
+    static VALUE get_y_min(VALUE self);
+    static VALUE get_z_min(VALUE self);
+    static VALUE get_m_min(VALUE self);
     /* static VALUE get_x_max(VALUE self); */
     /* static VALUE get_y_max(VALUE self); */
     /* static VALUE get_z_max(VALUE self); */
