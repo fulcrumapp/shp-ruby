@@ -16,7 +16,7 @@ namespace shp {
     static VALUE get_shape_type(VALUE self);
     static VALUE get_shape_id(VALUE self);
     static VALUE get_shape_parts(VALUE self);
-    /* static VALUE get_shape_part_starts(VALUE self); */
+    static VALUE get_shape_part_starts(VALUE self);
     /* static VALUE get_shape_part_types(VALUE self); */
     /* static VALUE get_vertex_count(VALUE self); */
     /* static VALUE get_x(VALUE self); */

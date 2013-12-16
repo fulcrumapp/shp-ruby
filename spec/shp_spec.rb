@@ -160,5 +160,9 @@ describe "SHP" do
     it 'should return the shape part count' do
       @obj.get_shape_parts.should eq(1)
     end
+
+    it 'should return the shape part start offsets' do
+      @obj.get_shape_part_starts.should eq([0])
+    end
   end
 end
