@@ -139,6 +139,25 @@ VALUE shape_object::get_x(VALUE self)
   return result;
 }
 
+VALUE shape_object::get_y(VALUE self)
+{
+  shape_object *object = unwrap(self);
+
+  CHECK_VALID_HANDLE(object->value());
+
+  VALUE result = rb_ary_new();
+
+  SHPObject *obj = object->value();
+
+  if (obj && obj->padfY) {
+    for (int i = 0; i < obj->nVertices; ++i) {
+      rb_ary_push(result, rb_float_new(obj->padfY[i]));
+    }
+  }
+
+  return result;
+}
+
 /* VALUE shape_object::get_shape_parts(VALUE self); */
 /* VALUE shape_object::get_shape_part_starts(VALUE self); */
 /* VALUE shape_object::get_shape_part_types(VALUE self); */
@@ -168,6 +187,7 @@ void shape_object::define(VALUE module)
   rb_define_method(shape_object::_klass, "get_shape_part_types", SHP_METHOD(shape_object::get_shape_part_types), 0);
   rb_define_method(shape_object::_klass, "get_vertex_count", SHP_METHOD(shape_object::get_vertex_count), 0);
   rb_define_method(shape_object::_klass, "get_x", SHP_METHOD(shape_object::get_x), 0);
+  rb_define_method(shape_object::_klass, "get_y", SHP_METHOD(shape_object::get_y), 0);
   rb_define_method(shape_object::_klass, "destroy", SHP_METHOD(shape_object::destroy), 0);
 }
 
