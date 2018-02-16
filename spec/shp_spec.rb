@@ -128,7 +128,7 @@ describe "SHP" do
     lambda { file.get_info }.should raise_error
   end
 
-  context 'shp' do
+  context 'single part polygon' do
     before(:each) do
       sni_office = [ [ -82.72932529449463, 27.93789618055838 ],
                      [ -82.72932529449463, 27.93768765436987 ],
@@ -211,6 +211,109 @@ describe "SHP" do
 
     it 'should return the y max' do
       @obj.get_y_max.should eq(27.93789618055838)
+    end
+
+    it 'should return the z max' do
+      @obj.get_z_max.should eq(0)
+    end
+
+    it 'should return the m max' do
+      @obj.get_m_max.should eq(0)
+    end
+  end
+
+  context 'multipart polygon' do
+    before(:each) do
+      multipolygon = [
+        [0, 0], [5, 0], [5, 4], [0, 4], [0, 0],           # outer ring 1
+        [1, 1], [2, 1], [2, 2], [1, 2], [1, 1],           # inner ring
+        [-1, -1], [-1, -3], [-2, -3], [-2, -1], [-1, -1], # outer ring 2
+      ]
+      x_values = multipolygon.map { |v| v[0] }
+      y_values = multipolygon.map { |v| v[1] }
+      nparts = 3
+      pan_part_start = [0, 5, 10]
+      n_vertices = x_values.length
+
+      @shp = SHP::Shapefile.create('testfile_multipolygons', 5)
+      @shape = SHP::Shapefile.create_object(
+        5,              # ShpType ID(5=POLYGON)
+        -1,             # iShape
+        nparts,
+        pan_part_start,
+        nil,            # panPartType
+        n_vertices,
+        x_values,
+        y_values,
+        nil,            # z_values
+        nil             # M values
+      )
+      @shp.write_object(-1, @shape)
+      @obj = @shp.read_object(0)
+    end
+
+    it 'should return the shape type' do
+      @obj.get_shape_type.should eq(5)
+    end
+
+    it 'should return the shape id' do
+      @obj.get_shape_id.should eq(0)
+    end
+
+    it 'should return the shape part count' do
+      @obj.get_shape_parts.should eq(3)
+    end
+
+    it 'should return the shape part start offsets' do
+      @obj.get_shape_part_starts.should eq([0, 5, 10])
+    end
+
+    it 'should return the shape part types' do
+      @obj.get_shape_part_types.should eq([5, 5, 5]) # [SHPP_RING]
+    end
+
+    it 'should return the vertex count' do
+      @obj.get_vertex_count.should eq(15)
+    end
+
+    it 'should return the x values' do
+      @obj.get_x.should eq([0, 5, 5, 0, 0, 1, 2, 2, 1, 1, -1, -1, -2, -2, -1].map(&:to_f))
+    end
+
+    it 'should return the y values' do
+      @obj.get_y.should eq([0, 0, 4, 4, 0, 1, 1, 2, 2, 1, -1, -3, -3, -1, -1].map(&:to_f))
+    end
+
+    it 'should return the z values' do
+      @obj.get_z.should eq(Array.new(15, 0))
+    end
+
+    it 'should return the m values' do
+      @obj.get_m.should eq(Array.new(15, 0))
+    end
+
+    it 'should return the x min' do
+      @obj.get_x_min.should eq(-2.0)
+    end
+
+    it 'should return the y min' do
+      @obj.get_y_min.should eq(-3.0)
+    end
+
+    it 'should return the z min' do
+      @obj.get_z_min.should eq(0)
+    end
+
+    it 'should return the m min' do
+      @obj.get_m_min.should eq(0)
+    end
+
+    it 'should return the x max' do
+      @obj.get_x_max.should eq(5.0)
+    end
+
+    it 'should return the y max' do
+      @obj.get_y_max.should eq(4.0)
     end
 
     it 'should return the z max' do
